@@ -1,12 +1,12 @@
-﻿namespace Moq.EntityFrameworkCore;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using Moq.EntityFrameworkCore.DbAsyncQueryProvider;
 using Moq.Language;
 using Moq.Language.Flow;
+
+namespace Moq.EntityFrameworkCore;
 
 public static class MoqExtensions
 {

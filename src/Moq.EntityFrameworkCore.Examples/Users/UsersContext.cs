@@ -1,7 +1,7 @@
-﻿namespace Moq.EntityFrameworkCore.Examples.Users;
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Moq.EntityFrameworkCore.Examples.Users.Entities;
+
+namespace Moq.EntityFrameworkCore.Examples.Users;
 
 public class UsersContext : DbContext
 {

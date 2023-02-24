@@ -1,9 +1,9 @@
-﻿namespace Moq.EntityFrameworkCore.Tests.DbAsyncQueryProvider;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
-using EntityFrameworkCore.DbAsyncQueryProvider;
+using Moq.EntityFrameworkCore.DbAsyncQueryProvider;
 using Xunit;
+
+namespace Moq.EntityFrameworkCore.Tests.DbAsyncQueryProvider;
 
 public class InMemoryDbAsyncEnumeratorTests
 {
@@ -12,36 +12,36 @@ public class InMemoryDbAsyncEnumeratorTests
 
     public InMemoryDbAsyncEnumeratorTests()
     {
-        this.inMemoryDbAsyncEnumerator = new InMemoryDbAsyncEnumerator<int>(this.enumeratorMock.Object);
+        inMemoryDbAsyncEnumerator = new InMemoryDbAsyncEnumerator<int>(enumeratorMock.Object);
     }
 
     [Fact]
     public void Given_InMemoryDbAsyncEnumerator_When_Dispose_Then_InnerEnumeratorShouldBeDisposed()
     {
         // Act
-        this.inMemoryDbAsyncEnumerator.Dispose();
+        inMemoryDbAsyncEnumerator.Dispose();
 
         // Assert
-        this.enumeratorMock.Verify(x => x.Dispose());
+        enumeratorMock.Verify(x => x.Dispose());
     }
 
     [Fact]
     public void Given_InMemoryDbAsyncEnumerator_When_Current_Then_CurrentFromInInnerEnumeratorShouldBeUsed()
     {
         // Act
-        int result = this.inMemoryDbAsyncEnumerator.Current;
+        int result = inMemoryDbAsyncEnumerator.Current;
 
         // Assert
-        this.enumeratorMock.VerifyGet(x=> x.Current);
+        enumeratorMock.VerifyGet(x=> x.Current);
     }
 
     [Fact]
     public async void Given_InMemoryDbAsyncEnumerator_When_Current_Then_CurrentShouldBeSameAsInInnerEnumerator()
     {
         // Act
-        await this.inMemoryDbAsyncEnumerator.MoveNext(CancellationToken.None);
+        await inMemoryDbAsyncEnumerator.MoveNext(CancellationToken.None);
 
         // Assert
-        this.enumeratorMock.Verify(x => x.MoveNext());
+        enumeratorMock.Verify(x => x.MoveNext());
     }
 }

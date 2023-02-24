@@ -1,10 +1,10 @@
-﻿namespace Moq.EntityFrameworkCore.DbAsyncQueryProvider;
-
-using System.Linq;
+﻿using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Query;
+
+namespace Moq.EntityFrameworkCore.DbAsyncQueryProvider;
 
 public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
 {
@@ -27,12 +27,12 @@ public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
 
     public object Execute(Expression expression)
     {
-        return this.innerQueryProvider.Execute(expression);
+        return innerQueryProvider.Execute(expression);
     }
 
     public TResult Execute<TResult>(Expression expression)
     {
-        return this.innerQueryProvider.Execute<TResult>(expression);
+        return innerQueryProvider.Execute<TResult>(expression);
     }
 
     public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken = new CancellationToken())
@@ -53,6 +53,6 @@ public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
 
     public Task<object> ExecuteAsync(Expression expression, CancellationToken cancellationToken)
     {
-        return Task.FromResult(this.Execute(expression));
+        return Task.FromResult(Execute(expression));
     }
 }

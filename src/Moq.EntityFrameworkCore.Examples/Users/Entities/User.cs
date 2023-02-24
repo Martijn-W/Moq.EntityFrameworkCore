@@ -1,6 +1,6 @@
-﻿namespace Moq.EntityFrameworkCore.Examples.Users.Entities;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
+namespace Moq.EntityFrameworkCore.Examples.Users.Entities;
 
 public class User
 {

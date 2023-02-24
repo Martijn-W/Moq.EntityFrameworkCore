@@ -1,12 +1,12 @@
-﻿namespace Moq.EntityFrameworkCore.Examples.Users;
-
-using Microsoft.EntityFrameworkCore;
-using Moq.EntityFrameworkCore.Examples.Users.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Moq.EntityFrameworkCore.Examples.Users.Entities;
+
+namespace Moq.EntityFrameworkCore.Examples.Users;
 
 public class UsersService
 {
@@ -19,26 +19,26 @@ public class UsersService
 
     public IList<User> GetLockedUsers()
     {
-        return this.usersContext.Users.Where(x => x.AccountLocked).ToList();
+        return usersContext.Users.Where(x => x.AccountLocked).ToList();
     }
 
     public async Task<IList<User>> GetLockedUsersAsync()
     {
-        return await this.usersContext.Users.Where(x => x.AccountLocked).ToListAsync();
+        return await usersContext.Users.Where(x => x.AccountLocked).ToListAsync();
     }
 
     public IList<Role> GetDisabledRoles()
     {
-        return this.usersContext.Roles.Where(x => !x.IsEnabled).ToList();
+        return usersContext.Roles.Where(x => !x.IsEnabled).ToList();
     }
 
     public async Task<IList<Role>> GetDisabledRolesAsync()
     {
-        return await this.usersContext.Roles.Where(x => !x.IsEnabled).ToListAsync();
+        return await usersContext.Roles.Where(x => !x.IsEnabled).ToListAsync();
     }
 
     public async Task<User> FindOneUserAsync(Expression<Func<User, bool>> predicate)
     {
-        return await this.usersContext.Set<User>().FirstOrDefaultAsync(predicate);
+        return await usersContext.Set<User>().FirstOrDefaultAsync(predicate);
     }
 }

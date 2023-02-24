@@ -1,13 +1,12 @@
-﻿namespace Moq.EntityFrameworkCore.Examples;
-
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoFixture;
-using Moq.EntityFrameworkCore;
 using Moq.EntityFrameworkCore.Examples.Users;
 using Moq.EntityFrameworkCore.Examples.Users.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
-using System.Linq;
+
+namespace Moq.EntityFrameworkCore.Examples;
 
 public class UsersServiceTest
 {
