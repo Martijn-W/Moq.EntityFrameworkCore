@@ -40,7 +40,7 @@ public static class MoqExtensions
     /// <summary>
     /// Configures a Mock for a <see cref="DbSet{TEntity}"/> or a <see cref="DbQuery{TQuery}"/> so that it can be queriable via LINQ
     /// </summary>
-    private static void ConfigureMock<TEntity>(Mock dbSetMock, IEnumerable<TEntity> entities) where TEntity : class
+    private static void ConfigureMock<TEntity>(Mock<DbSet<TEntity>> dbSetMock, IEnumerable<TEntity> entities) where TEntity : class
     {
         var entitiesAsQueryable = entities.AsQueryable();
 
@@ -52,6 +52,7 @@ public static class MoqExtensions
             .Setup(m => m.Provider)
             .Returns(new InMemoryAsyncQueryProvider<TEntity>(entitiesAsQueryable.Provider));
 
+        dbSetMock.Setup(m => m.AsQueryable()).Returns(dbSetMock.Object);
         dbSetMock.As<IQueryable<TEntity>>().Setup(m => m.Expression).Returns(entitiesAsQueryable.Expression);
         dbSetMock.As<IQueryable<TEntity>>().Setup(m => m.ElementType).Returns(entitiesAsQueryable.ElementType);
         dbSetMock.As<IQueryable<TEntity>>().Setup(m => m.GetEnumerator()).Returns(() => entitiesAsQueryable.GetEnumerator());
