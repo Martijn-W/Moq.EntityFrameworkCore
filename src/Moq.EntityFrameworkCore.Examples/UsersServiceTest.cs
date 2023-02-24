@@ -163,8 +163,29 @@ public class UsersServiceTest
         //Act
         var actual = await usersService.QueryableAsync();
 
+        //Assert
         Assert.NotNull(actual);
         Assert.Equal(2, actual.Count);
+    }
+
+    [Fact]
+    public async Task Given_ExecuteDeleteAsync_Then_NoError()
+    {
+        var users = new[]
+        {
+            Fixture.Build<User>().With(u => u.AccountLocked, true).Create(),
+            Fixture.Build<User>().With(u => u.AccountLocked, false).Create()
+        };
+        var userContextMock = new Mock<UsersContext>();
+        userContextMock.Setup(c => c.Users).ReturnsDbSet(users);
+
+        var usersService = new UsersService(userContextMock.Object);
+        
+        //Act
+        var actual = await usersService.BulkDeleteLockedUsersAsync();
+
+        //Assert
+        Assert.Equal(1, actual);
     }
 
     private static IList<User> GenerateNotLockedUsers()

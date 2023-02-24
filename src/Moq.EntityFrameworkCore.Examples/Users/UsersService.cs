@@ -48,4 +48,10 @@ public class UsersService
 
         return await query.ToListAsync();
     }
+
+    public async Task<int> BulkDeleteLockedUsersAsync()
+    {
+        return await usersContext.Users.Where(u => u.AccountLocked)
+            .ExecuteDeleteAsync();
+    }
 }
