@@ -151,6 +151,22 @@ public class UsersServiceTest
         Assert.Equal(userToAssertWhenSecondCall, user);
     }
 
+    [Fact]
+    public async Task Given_Queryable_Then_Return_Queryable()
+    {
+        var users = GenerateNotLockedUsers();
+        var userContextMock = new Mock<UsersContext>();
+        userContextMock.Setup(c => c.Users).ReturnsDbSet(users);
+
+        var usersService = new UsersService(userContextMock.Object);
+
+        //Act
+        var actual = await usersService.QueryableAsync();
+
+        Assert.NotNull(actual);
+        Assert.Equal(2, actual.Count);
+    }
+
     private static IList<User> GenerateNotLockedUsers()
     {
         IList<User> users = new List<User>

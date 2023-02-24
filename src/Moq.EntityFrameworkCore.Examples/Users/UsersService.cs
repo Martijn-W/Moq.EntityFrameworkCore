@@ -41,4 +41,11 @@ public class UsersService
     {
         return await usersContext.Set<User>().FirstOrDefaultAsync(predicate);
     }
+
+    public async Task<IList<User>> QueryableAsync()
+    {
+        var query = usersContext.Users.AsQueryable();
+
+        return await query.ToListAsync();
+    }
 }
