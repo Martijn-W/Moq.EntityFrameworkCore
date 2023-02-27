@@ -28,6 +28,7 @@ Added support for EntityFrameworkCore 7.0</PackageReleaseNotes>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.3" />
     <PackageReference Include="Moq" Version="4.18.1" />
   </ItemGroup>
 

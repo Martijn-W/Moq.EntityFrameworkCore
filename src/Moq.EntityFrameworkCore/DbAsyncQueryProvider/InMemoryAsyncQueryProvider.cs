@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace Moq.EntityFrameworkCore.DbAsyncQueryProvider;
@@ -27,6 +30,12 @@ public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
 
     public object Execute(Expression expression)
     {
+        if (expression is MethodCallExpression
+            {
+                Method.Name: nameof(RelationalQueryableExtensions.ExecuteDelete) or nameof(RelationalQueryableExtensions.ExecuteUpdate)
+            } methodCall)
+            expression = RewriteExpressionToCount(methodCall);
+
         return innerQueryProvider.Execute(expression);
     }
 
@@ -38,12 +47,10 @@ public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
     public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken = new CancellationToken())
     {
         var result = Execute(expression);
-            
+
         var expectedResultType = typeof(TResult).GetGenericArguments()?.FirstOrDefault();
         if (expectedResultType == null)
-        {
-            return default(TResult);
-        }
+            return default;
 
         return (TResult)typeof(Task).GetMethod(nameof(Task.FromResult))
             ?.MakeGenericMethod(expectedResultType)
@@ -54,5 +61,19 @@ public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
     public Task<object> ExecuteAsync(Expression expression, CancellationToken cancellationToken)
     {
         return Task.FromResult(Execute(expression));
+    }
+
+    private static Expression RewriteExpressionToCount(MethodCallExpression methodCall)
+    {
+        var elementType = methodCall.Method.GetGenericArguments()[0];
+        var methodInfo = QueryableMethods.CountWithPredicate.MakeGenericMethod(elementType);
+
+        var args = ((MethodCallExpression)methodCall.Arguments[0]).Arguments;
+
+        return Expression.Call(
+            methodInfo,
+            args[0],
+            args[1]
+        );
     }
 }
