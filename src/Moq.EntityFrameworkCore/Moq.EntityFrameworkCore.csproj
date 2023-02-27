@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <FileVersion>5.0.2.0</FileVersion>
-    <Version>7.0.3</Version>
+    <Version>7.0.3.1</Version>
     <Authors>Michał Jankowski, Martijn W</Authors>
     <PackageId>Moq.EntityFrameworkCore</PackageId>
     <Description>Library that provides methods that will help you with mocking Entity Framework Core.</Description>
