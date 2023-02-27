@@ -19,7 +19,7 @@ public class InMemoryAsyncEnumerable<T> : EnumerableQuery<T>, IAsyncEnumerable<T
 
     IQueryProvider IQueryable.Provider => new InMemoryAsyncQueryProvider<T>(this);
 
-    public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
+    public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = new())
     {
         return new InMemoryDbAsyncEnumerator<T>(this.AsEnumerable().GetEnumerator());
     }

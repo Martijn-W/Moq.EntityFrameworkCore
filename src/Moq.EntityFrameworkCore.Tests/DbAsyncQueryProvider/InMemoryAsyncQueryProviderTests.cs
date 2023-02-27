@@ -8,7 +8,7 @@ namespace Moq.EntityFrameworkCore.Tests.DbAsyncQueryProvider;
 
 public class InMemoryAsyncQueryProviderTests
 {
-    private readonly Mock<IQueryProvider> queryProviderMock = new Mock<IQueryProvider>();
+    private readonly Mock<IQueryProvider> queryProviderMock = new();
     private readonly Expression expression = new Mock<Expression>().Object;
     private readonly InMemoryAsyncQueryProvider<int> inMemoryAsyncQueryProvider;
 

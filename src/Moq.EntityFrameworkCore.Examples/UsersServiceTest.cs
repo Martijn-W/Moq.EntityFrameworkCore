@@ -10,7 +10,7 @@ namespace Moq.EntityFrameworkCore.Examples;
 
 public class UsersServiceTest
 {
-    private static readonly Fixture Fixture = new Fixture();
+    private static readonly Fixture Fixture = new();
 
     [Fact]
     public void Given_ListOfUsersWithOneUserAccountLock_When_CheckingWhoIsLocked_Then_CorrectLockedUserIsReturned()

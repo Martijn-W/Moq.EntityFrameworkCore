@@ -7,7 +7,7 @@ namespace Moq.EntityFrameworkCore.Tests.DbAsyncQueryProvider;
 
 public class InMemoryDbAsyncEnumeratorTests
 {
-    private readonly Mock<IEnumerator<int>> enumeratorMock = new Mock<IEnumerator<int>>();
+    private readonly Mock<IEnumerator<int>> enumeratorMock = new();
     private readonly InMemoryDbAsyncEnumerator<int> inMemoryDbAsyncEnumerator;
 
     public InMemoryDbAsyncEnumeratorTests()

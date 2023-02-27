@@ -44,7 +44,7 @@ public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
         return innerQueryProvider.Execute<TResult>(expression);
     }
 
-    public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken = new CancellationToken())
+    public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken = new())
     {
         var result = Execute(expression);
 
