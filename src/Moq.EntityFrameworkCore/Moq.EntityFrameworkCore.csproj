@@ -19,6 +19,7 @@ Added support for AsQueryable</PackageReleaseNotes>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
