@@ -38,7 +38,7 @@ public static class MoqExtensions
     }
 
     /// <summary>
-    /// Configures a Mock for a <see cref="DbSet{TEntity}"/> or a <see cref="DbQuery{TQuery}"/> so that it can be queriable via LINQ
+    /// Configures a Mock for a <see cref="DbSet{TEntity}"/> or a <see cref="DbQuery{TQuery}"/> so that it can be queryable via LINQ
     /// </summary>
     private static void ConfigureMock<TEntity>(Mock<DbSet<TEntity>> dbSetMock, IEnumerable<TEntity> entities) where TEntity : class
     {
