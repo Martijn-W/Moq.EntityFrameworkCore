@@ -30,7 +30,7 @@ public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
     {
         if (expression is MethodCallExpression
             {
-                Method.Name: "Count" or nameof(RelationalQueryableExtensions.ExecuteDelete) or nameof(RelationalQueryableExtensions.ExecuteUpdate)
+                Method.Name: nameof(RelationalQueryableExtensions.ExecuteDelete) or nameof(RelationalQueryableExtensions.ExecuteUpdate)
             } methodCall)
             expression = RewriteExpressionToCount(methodCall);
 
