@@ -54,4 +54,24 @@ public class UsersService
         return await usersContext.Users.Where(u => u.AccountLocked)
             .ExecuteDeleteAsync();
     }
+    
+    public async Task<int> BulkDeleteWithMultipleWhereAsync()
+    {
+        return await usersContext.Users.Where(u => u.AccountLocked)
+            .Where(u => u.Name == "Unit")
+            .ExecuteDeleteAsync();
+    }
+
+    public async Task<int> BulkUpdateUsersAsync()
+    {
+        return await usersContext.Users.Where(u => u.AccountLocked)
+            .ExecuteUpdateAsync(s => s.SetProperty(u => u.AccountLocked, false));
+    }
+
+    public async Task<int> BulkUpdateWithMultipleWhereAsync()
+    {
+        return await usersContext.Users.Where(u => u.AccountLocked)
+            .Where(u => u.Name.Contains("Unit"))
+            .ExecuteUpdateAsync(s => s.SetProperty(u => u.AccountLocked, false));
+    }
 }

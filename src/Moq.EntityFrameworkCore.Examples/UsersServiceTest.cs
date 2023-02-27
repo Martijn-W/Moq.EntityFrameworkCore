@@ -169,10 +169,11 @@ public class UsersServiceTest
     }
 
     [Fact]
-    public async Task Given_ExecuteDeleteAsync_Then_NoError()
+    public async Task Given_ExecuteDeleteAsync_Then_ReturnInstead_Count()
     {
         var users = new[]
         {
+            Fixture.Build<User>().With(u => u.AccountLocked, true).Create(),
             Fixture.Build<User>().With(u => u.AccountLocked, true).Create(),
             Fixture.Build<User>().With(u => u.AccountLocked, false).Create()
         };
@@ -185,7 +186,71 @@ public class UsersServiceTest
         var actual = await usersService.BulkDeleteLockedUsersAsync();
 
         //Assert
+        Assert.Equal(2, actual);
+    }
+
+    [Fact]
+    public async Task Given_ExecuteDeleteAsync_With_Multiple_Statements_Then_ReturnInstead_Count()
+    {
+        var users = new[]
+        {
+            Fixture.Build<User>().With(u => u.AccountLocked, true).With(u => u.Name, "Unit").Create(),
+            Fixture.Build<User>().With(u => u.AccountLocked, true).With(u => u.Name, "Hans").Create(),
+            Fixture.Build<User>().With(u => u.AccountLocked, false).With(u => u.Name, "Jane").Create()
+        };
+        var userContextMock = new Mock<UsersContext>();
+        userContextMock.Setup(c => c.Users).ReturnsDbSet(users);
+
+        var usersService = new UsersService(userContextMock.Object);
+        
+        //Act
+        var actual = await usersService.BulkDeleteWithMultipleWhereAsync();
+
+        //Assert
         Assert.Equal(1, actual);
+    }
+
+    [Fact]
+    public async Task Given_ExecuteUpdateAsync_Then_ReturnInstead_Count()
+    {
+        var users = new[]
+        {
+            Fixture.Build<User>().With(u => u.AccountLocked, true).Create(),
+            Fixture.Build<User>().With(u => u.AccountLocked, true).Create(),
+            Fixture.Build<User>().With(u => u.AccountLocked, true).Create(),
+            Fixture.Build<User>().With(u => u.AccountLocked, false).Create()
+        };
+        var userContextMock = new Mock<UsersContext>();
+        userContextMock.Setup(c => c.Users).ReturnsDbSet(users);
+
+        var usersService = new UsersService(userContextMock.Object);
+        
+        //Act
+        var actual = await usersService.BulkUpdateUsersAsync();
+
+        //Assert
+        Assert.Equal(3, actual);
+    }
+    
+    [Fact]
+    public async Task Given_ExecuteUpdateAsync_With_Multiple_Statements_Then_ReturnInstead_Count()
+    {
+        var users = new[]
+        {
+            Fixture.Build<User>().With(u => u.AccountLocked, true).With(u => u.Name, "Unit Tester").Create(),
+            Fixture.Build<User>().With(u => u.AccountLocked, true).With(u => u.Name, "Unit Runner").Create(),
+            Fixture.Build<User>().With(u => u.AccountLocked, false).With(u => u.Name, "Jane").Create()
+        };
+        var userContextMock = new Mock<UsersContext>();
+        userContextMock.Setup(c => c.Users).ReturnsDbSet(users);
+
+        var usersService = new UsersService(userContextMock.Object);
+        
+        //Act
+        var actual = await usersService.BulkUpdateWithMultipleWhereAsync();
+
+        //Assert
+        Assert.Equal(2, actual);
     }
 
     private static IList<User> GenerateNotLockedUsers()
