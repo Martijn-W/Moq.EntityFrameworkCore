@@ -54,7 +54,7 @@ public class UsersService
         return await _usersContext.Users.Where(u => u.AccountLocked)
             .ExecuteDeleteAsync();
     }
-    
+
     public async Task<int> BulkDeleteWithMultipleWhereAsync()
     {
         return await _usersContext.Users.Where(u => u.AccountLocked)

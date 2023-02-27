@@ -30,7 +30,7 @@ public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
     {
         if (expression is MethodCallExpression
             {
-                Method.Name: nameof(RelationalQueryableExtensions.ExecuteDelete) or nameof(RelationalQueryableExtensions.ExecuteUpdate)
+                Method.Name: "Count" or nameof(RelationalQueryableExtensions.ExecuteDelete) or nameof(RelationalQueryableExtensions.ExecuteUpdate)
             } methodCall)
             expression = RewriteExpressionToCount(methodCall);
 
@@ -64,7 +64,17 @@ public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
     private static Expression RewriteExpressionToCount(MethodCallExpression methodCall)
     {
         var elementType = methodCall.Method.GetGenericArguments()[0];
-        var methodInfo = QueryableMethods.CountWithPredicate.MakeGenericMethod(elementType);
+        var isSelect = methodCall.Arguments[0] is MethodCallExpression { Method.Name: nameof(Queryable.Select) };
+
+        var methodInfo = isSelect
+            ? QueryableMethods.CountWithoutPredicate.MakeGenericMethod(elementType)
+            : QueryableMethods.CountWithPredicate.MakeGenericMethod(elementType);
+
+        if (isSelect)
+            return Expression.Call(
+                methodInfo,
+                methodCall.Arguments[0]
+            );
 
         var args = ((MethodCallExpression)methodCall.Arguments[0]).Arguments;
 
