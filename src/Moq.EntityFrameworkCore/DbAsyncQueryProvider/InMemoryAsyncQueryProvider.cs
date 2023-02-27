@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,11 +9,11 @@ namespace Moq.EntityFrameworkCore.DbAsyncQueryProvider;
 
 public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
 {
-    private readonly IQueryProvider innerQueryProvider;
+    private readonly IQueryProvider _innerQueryProvider;
 
     public InMemoryAsyncQueryProvider(IQueryProvider innerQueryProvider)
     {
-        this.innerQueryProvider = innerQueryProvider;
+        _innerQueryProvider = innerQueryProvider;
     }
 
     public IQueryable CreateQuery(Expression expression)
@@ -36,12 +34,12 @@ public class InMemoryAsyncQueryProvider<TEntity> : IAsyncQueryProvider
             } methodCall)
             expression = RewriteExpressionToCount(methodCall);
 
-        return innerQueryProvider.Execute(expression);
+        return _innerQueryProvider.Execute(expression);
     }
 
     public TResult Execute<TResult>(Expression expression)
     {
-        return innerQueryProvider.Execute<TResult>(expression);
+        return _innerQueryProvider.Execute<TResult>(expression);
     }
 
     public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken = new())

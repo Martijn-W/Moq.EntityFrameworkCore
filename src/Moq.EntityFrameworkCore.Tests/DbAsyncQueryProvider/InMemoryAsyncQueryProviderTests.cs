@@ -8,84 +8,84 @@ namespace Moq.EntityFrameworkCore.Tests.DbAsyncQueryProvider;
 
 public class InMemoryAsyncQueryProviderTests
 {
-    private readonly Mock<IQueryProvider> queryProviderMock = new();
-    private readonly Expression expression = new Mock<Expression>().Object;
-    private readonly InMemoryAsyncQueryProvider<int> inMemoryAsyncQueryProvider;
+    private readonly Mock<IQueryProvider> _queryProviderMock = new();
+    private readonly Expression _expression = new Mock<Expression>().Object;
+    private readonly InMemoryAsyncQueryProvider<int> _inMemoryAsyncQueryProvider;
 
     public InMemoryAsyncQueryProviderTests()
     {
-        inMemoryAsyncQueryProvider = new InMemoryAsyncQueryProvider<int>(queryProviderMock.Object);
+        _inMemoryAsyncQueryProvider = new InMemoryAsyncQueryProvider<int>(_queryProviderMock.Object);
     }
 
     [Fact]
     public void Given_InMemoryAsyncQueryProvider_When_CreatingQuery_Then_CorrectInMemoryAsyncEnumerableIsReturned()
     {
         // Act
-        IQueryable result = inMemoryAsyncQueryProvider.CreateQuery(expression);
+        IQueryable result = _inMemoryAsyncQueryProvider.CreateQuery(_expression);
 
         // Assert
         Assert.IsType<InMemoryAsyncEnumerable<int>>(result);
-        Assert.Equal(expression, result.Expression);
+        Assert.Equal(_expression, result.Expression);
     }
 
     [Fact]
     public void Given_InMemoryAsyncQueryProvider_When_CreatingQueryGeneric_Then_CorrectInMemoryAsyncEnumerableIsReturned()
     {
         // Act
-        IQueryable result = inMemoryAsyncQueryProvider.CreateQuery<int>(expression);
+        IQueryable result = _inMemoryAsyncQueryProvider.CreateQuery<int>(_expression);
 
         // Assert
         Assert.IsType<InMemoryAsyncEnumerable<int>>(result);
-        Assert.Equal(expression, result.Expression);
+        Assert.Equal(_expression, result.Expression);
     }
 
     [Fact]
     public void Given_InMemoryAsyncQueryProvider_When_ExecutingQuery_Then_ExecutionIsDoneAtInnerQueryProvider()
     {
         // Act
-        inMemoryAsyncQueryProvider.Execute(expression);
+        _inMemoryAsyncQueryProvider.Execute(_expression);
 
         // Assert
-        queryProviderMock.Verify(x=> x.Execute(expression));
+        _queryProviderMock.Verify(x=> x.Execute(_expression));
     }
 
     [Fact]
     public void Given_InMemoryAsyncQueryProvider_When_ExecutingQueryGeneric_Then_ExecutionIsDoneAtInnerQueryProvider()
     {
         // Act
-        inMemoryAsyncQueryProvider.Execute<int>(expression);
+        _inMemoryAsyncQueryProvider.Execute<int>(_expression);
 
         // Assert
-        queryProviderMock.Verify(x => x.Execute<int>(expression));
+        _queryProviderMock.Verify(x => x.Execute<int>(_expression));
     }
 
     [Fact]
     public void Given_InMemoryAsyncQueryProvider_When_ExecutingQueryAsync_Then_ExecutionIsDoneAtInnerQueryProvider()
     {
         // Act
-        inMemoryAsyncQueryProvider.ExecuteAsync<int>(expression);
+        _inMemoryAsyncQueryProvider.ExecuteAsync<int>(_expression);
 
         // Assert
-        queryProviderMock.Verify(x => x.Execute(expression));
+        _queryProviderMock.Verify(x => x.Execute(_expression));
     }
 
     [Fact]
     public void Given_InMemoryAsyncQueryProvider_When_ExecutingQueryAsyncWithCancellationToken_Then_ExecutionIsDoneAtInnerQueryProvider()
     {
         // Act
-        inMemoryAsyncQueryProvider.ExecuteAsync(expression, CancellationToken.None);
+        _inMemoryAsyncQueryProvider.ExecuteAsync(_expression, CancellationToken.None);
 
         // Assert
-        queryProviderMock.Verify(x => x.Execute(expression));
+        _queryProviderMock.Verify(x => x.Execute(_expression));
     }
 
     [Fact]
     public void Given_InMemoryAsyncQueryProvider_When_ExecutingQueryAsyncAndGeneric_Then_ExecutionIsDoneAtInnerQueryProvider()
     {
         // Act
-        inMemoryAsyncQueryProvider.ExecuteAsync<int>(expression, CancellationToken.None);
+        _inMemoryAsyncQueryProvider.ExecuteAsync<int>(_expression, CancellationToken.None);
 
         // Assert
-        queryProviderMock.Verify(x => x.Execute(expression));
+        _queryProviderMock.Verify(x => x.Execute(_expression));
     }
 }

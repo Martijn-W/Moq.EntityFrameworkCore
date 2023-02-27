@@ -7,12 +7,12 @@ namespace Moq.EntityFrameworkCore.DbAsyncQueryProvider;
 
 public class InMemoryDbAsyncEnumerator<T> : IAsyncEnumerator<T>
 {
-    private readonly IEnumerator<T> innerEnumerator;
-    private bool disposed;
+    private readonly IEnumerator<T> _innerEnumerator;
+    private bool _disposed;
 
     public InMemoryDbAsyncEnumerator(IEnumerator<T> enumerator)
     {
-        innerEnumerator = enumerator;
+        _innerEnumerator = enumerator;
     }
 
     public void Dispose()
@@ -29,27 +29,27 @@ public class InMemoryDbAsyncEnumerator<T> : IAsyncEnumerator<T>
 
     public Task<bool> MoveNext(CancellationToken cancellationToken)
     {
-        return Task.FromResult(innerEnumerator.MoveNext());
+        return Task.FromResult(_innerEnumerator.MoveNext());
     }
 
     public ValueTask<bool> MoveNextAsync()
     {
-        return new ValueTask<bool>(Task.FromResult(innerEnumerator.MoveNext()));
+        return new ValueTask<bool>(Task.FromResult(_innerEnumerator.MoveNext()));
     }
 
-    public T Current => innerEnumerator.Current;
+    public T Current => _innerEnumerator.Current;
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!disposed)
+        if (!_disposed)
         {
             if (disposing)
             {
                 // Dispose managed resources.
-                innerEnumerator.Dispose();
+                _innerEnumerator.Dispose();
             }
 
-            disposed = true;
+            _disposed = true;
         }
     }
 }
