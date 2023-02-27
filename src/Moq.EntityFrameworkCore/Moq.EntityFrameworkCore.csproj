@@ -4,25 +4,31 @@
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <FileVersion>5.0.2.0</FileVersion>
-    <Version>3.1.2</Version>
-    <Authors>Michał Jankowski</Authors>
+    <Version>7.0.3</Version>
+    <Authors>Michał Jankowski, Martijn W</Authors>
     <PackageId>Moq.EntityFrameworkCore</PackageId>
     <Description>Library that provides methods that will help you with mocking Entity Framework Core.</Description>
-    <Copyright>Copyright 2016 - Michał Jankowski</Copyright>
+    <Copyright>Copyright 2023 - Martijn W</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/MichalJankowskii/Moq.EntityFrameworkCore</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/MichalJankowskii/Moq.EntityFrameworkCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Martijn-W/Moq.EntityFrameworkCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Martijn-W/Moq.EntityFrameworkCore</RepositoryUrl>
     <PackageTags>Moq mocking EF EnityFramework DbSet DbContext unit test testing framework assert TDD BDD EntityFrameworkCore EFCore Core</PackageTags>
-    <PackageReleaseNotes>Version 7.0.0.1
-Added support for EntityFrameworkCore 7.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Version 7.0.3
+Added support for ExecuteUpdate, ExecuteDelete
+Added support for AsQueryable</PackageReleaseNotes>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
+    </None>
+    <None Update="icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
 
