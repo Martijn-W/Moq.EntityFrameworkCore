@@ -253,6 +253,25 @@ public class UsersServiceTest
         Assert.Equal(2, actual);
     }
 
+    [Fact]
+    public async Task Given_ExecuteUpdateAsync_With_Select_Then_ReturnInstead_Count()
+    {
+        var users = new[]
+        {
+            Fixture.Build<User>().With(u => u.AccountLocked, true).With(u => u.Name, "Unit Tester").Create()
+        };
+        var userContextMock = new Mock<UsersContext>();
+        userContextMock.Setup(c => c.Users).ReturnsDbSet(users);
+
+        var usersService = new UsersService(userContextMock.Object);
+        
+        //Act
+        var actual = await usersService.BulkUpdateWithSelectAsync();
+
+        //Assert
+        Assert.Equal(1, actual);
+    }
+
     private static IList<User> GenerateNotLockedUsers()
     {
         IList<User> users = new List<User>

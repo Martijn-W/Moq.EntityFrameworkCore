@@ -12,6 +12,8 @@ public class User
     public string Surname { get; set; }
 
     public bool AccountLocked { get; set; }
+    
+    public Address Address { get; set; }
 
     public virtual List<Role> Roles { get; set; }
 }

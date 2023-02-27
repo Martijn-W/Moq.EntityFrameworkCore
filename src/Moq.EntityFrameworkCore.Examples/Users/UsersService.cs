@@ -74,4 +74,11 @@ public class UsersService
             .Where(u => u.Name.Contains("Unit"))
             .ExecuteUpdateAsync(s => s.SetProperty(u => u.AccountLocked, false));
     }
+
+    public async Task<int> BulkUpdateWithSelectAsync()
+    {
+        return await _usersContext.Users.Where(u => u.Name == "Unit Tester")
+            .Select(u => u.Address)
+            .ExecuteUpdateAsync(u => u.SetProperty(a => a.City, "New City"));
+    }
 }
